@@ -65,6 +65,7 @@ namespace ColorFinder.ViewModel
             Decimal = observable.Select(_ => $"{R.Value}, {G.Value}, {B.Value}").ToReadOnlyReactiveProperty();
             Hexadecimal = observable.Select(_ => $"#{R.Value.ToString("X2")}{G.Value.ToString("X2")}{B.Value.ToString("X2")}").ToReadOnlyReactiveProperty();
             Brush = observable.Select(_ => new SolidColorBrush(Color.FromRgb(R.Value, G.Value, B.Value))).ToReadOnlyReactiveProperty();
+            R.Value = G.Value = B.Value = 255;
         }
     }
 }
