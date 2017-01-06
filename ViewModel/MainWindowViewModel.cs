@@ -66,7 +66,7 @@ namespace ColorFinder.ViewModel
 
             //  RGB値が変更通知を発行したときに更新する
             //  読み取り専用プロパティを生成する
-            var rgb = colorCode.ObserveProperty(c => c.R).Merge(colorCode.ObserveProperty(c => c.G)).Merge(colorCode.ObserveProperty(c => c.B));
+            var rgb = R.Merge(G).Merge(B);
             Decimal = rgb.Select(_ => $"{R.Value}, {G.Value}, {B.Value}").ToReadOnlyReactiveProperty();
             Hexadecimal = rgb.Select(_ => $"#{R.Value.ToString("X2")}{G.Value.ToString("X2")}{B.Value.ToString("X2")}").ToReadOnlyReactiveProperty();
             Brush = rgb.Select(_ => new SolidColorBrush(Color.FromRgb(R.Value, G.Value, B.Value))).ToReadOnlyReactiveProperty();
