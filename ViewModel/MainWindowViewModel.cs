@@ -50,6 +50,11 @@ namespace ColorFinder.ViewModel
         public ReadOnlyReactiveProperty<SolidColorBrush> Brush { get; private set; }
 
         /// <summary>
+        /// ランダムな色を設定するコマンドを取得します。
+        /// </summary>
+        public ReactiveCommand RandomCommand { get; private set; } = new ReactiveCommand();
+
+        /// <summary>
         /// インスタンスを生成します。
         /// </summary>
         public MainWindowViewModel()
@@ -66,6 +71,8 @@ namespace ColorFinder.ViewModel
             Hexadecimal = observable.Select(_ => $"#{R.Value.ToString("X2")}{G.Value.ToString("X2")}{B.Value.ToString("X2")}").ToReadOnlyReactiveProperty();
             Brush = observable.Select(_ => new SolidColorBrush(Color.FromRgb(R.Value, G.Value, B.Value))).ToReadOnlyReactiveProperty();
             R.Value = G.Value = B.Value = 255;
+
+            RandomCommand.Subscribe(_ => colorCode.SetRandomly());
         }
     }
 }

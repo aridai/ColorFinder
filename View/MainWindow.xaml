@@ -56,7 +56,7 @@
             <TextBox Grid.Row="1" Margin="3, 3" FontSize="14" TextAlignment="Center" IsReadOnly="True" Text="{Binding Decimal.Value, Mode=OneWay}" />
             <TextBox Grid.Row="2" Margin="3, 3" FontSize="14" TextAlignment="Center" IsReadOnly="True" Text="{Binding Hexadecimal.Value, Mode=OneWay}" />
             <Button Grid.Row="3" Margin="3, 3" Content="画面上から取得" />
-            <Button Grid.Row="4" Margin="3, 3" Content="ランダムに取得" />
+            <Button Grid.Row="4" Margin="3, 3" Content="ランダムに取得" Command="{Binding RandomCommand}" />
         </Grid>
 
         <!-- 右半分 -->

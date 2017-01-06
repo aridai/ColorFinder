@@ -40,5 +40,16 @@ namespace ColorFinder.Model
             get { return _B; }
             set { SetProperty(ref _B, value); }
         }
+
+        /// <summary>
+        /// ランダムにRGB値を設定します。
+        /// </summary>
+        public void SetRandomly()
+        {
+            var random = new Random();
+            R = (byte)random.Next(255);
+            G = (byte)random.Next(255);
+            B = (byte)random.Next(255);
+        }
     }
 }
