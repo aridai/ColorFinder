@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ColorFinder.View"
+        xmlns:ViewModel="clr-namespace:ColorFinder.ViewModel"
         mc:Ignorable="d"
         Title="ColorFinder"
         Width="360"
@@ -11,6 +12,10 @@
         MinWidth="360"
         MinHeight="280"
         Background="WhiteSmoke">
+    <Window.DataContext>
+        <ViewModel:MainWindowViewModel />
+    </Window.DataContext>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
