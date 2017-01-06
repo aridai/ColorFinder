@@ -4,7 +4,4 @@
              xmlns:local="clr-namespace:ColorFinder"
              xmlns:View="clr-namespace:ColorFinder.View"
              StartupUri="View/MainWindow.xaml">
-    <Application.MainWindow>
-        <View:MainWindow/>
-    </Application.MainWindow>
 </Application>
