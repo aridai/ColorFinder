@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{66AE0D0F-9138-4A93-BAF6-75F1F07505C3}</ProjectGuid>
+    <ProjectGuid>{33E18C12-CEF9-4999-B3C3-CBA4A861ECC5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ColorFinder</RootNamespace>
