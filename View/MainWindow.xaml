@@ -5,8 +5,101 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ColorFinder.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="300">
+        Title="ColorFinder"
+        Width="360"
+        Height="280"
+        MinWidth="360"
+        MinHeight="280"
+        Background="WhiteSmoke">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- メニュー -->
+        <Menu Grid.ColumnSpan="2">
+            <MenuItem Header="オプション(_O)">
+                <MenuItem  Header="最前面表示(_T)" />
+                <MenuItem  Header="カラーパレット(_C)"/>
+            </MenuItem>
+            <MenuItem Header="お気に入り(_F)">
+                <MenuItem Header="新規追加(_A)" />
+                <MenuItem Header="一覧から選択(_S)" />
+            </MenuItem>
+            <MenuItem Header="ヘルプ(_H)">
+                <MenuItem Header="使い方(_U)" />
+                <MenuItem Header="バージョン(_V)" />
+            </MenuItem>
+        </Menu>
+
+        <!-- 左半分 -->
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Margin="3, 3" />
+            <TextBox Grid.Row="1" Margin="3, 3" FontSize="14" TextAlignment="Center" IsReadOnly="True" />
+            <TextBox Grid.Row="2" Margin="3, 3" FontSize="14" TextAlignment="Center" IsReadOnly="True" />
+            <Button Grid.Row="3" Margin="3, 3" Content="画面上から取得" />
+            <Button Grid.Row="4" Margin="3, 3" Content="ランダムに取得" />
+        </Grid>
+
+        <!-- 右半分 -->
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <!-- R値 -->
+            <GroupBox Grid.Row="0" Header="R">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+
+                    <Slider Grid.Row="0" VerticalAlignment="Center" Minimum="0" Maximum="255" SmallChange="1" LargeChange="5" TickPlacement="BottomRight" TickFrequency="10" />
+                    <TextBox Grid.Row="1" Margin="5, 0" VerticalAlignment="Center" TextAlignment="Center" FontSize="11"/>
+                </Grid>
+            </GroupBox>
+
+            <!-- G値 -->
+            <GroupBox Grid.Row="1" Header="G">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+
+                    <Slider Grid.Row="0" VerticalAlignment="Center" Minimum="0" Maximum="255" SmallChange="1" LargeChange="5" TickPlacement="BottomRight" TickFrequency="10" />
+                    <TextBox Grid.Row="1" Margin="5, 0" VerticalAlignment="Center" TextAlignment="Center" FontSize="11"/>
+                </Grid>
+            </GroupBox>
+
+            <!-- B値 -->
+            <GroupBox Grid.Row="2" Header="B">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+
+                    <Slider Grid.Row="0" VerticalAlignment="Center" Minimum="0" Maximum="255" SmallChange="1" LargeChange="5" TickPlacement="BottomRight" TickFrequency="10" />
+                    <TextBox Grid.Row="1" Margin="5, 0" VerticalAlignment="Center" TextAlignment="Center" FontSize="11"/>
+                </Grid>
+            </GroupBox>
+        </Grid>
     </Grid>
 </Window>
