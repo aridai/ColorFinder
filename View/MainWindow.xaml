@@ -52,7 +52,9 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Margin="3, 3" Background="{Binding Brush.Value, Mode=OneWay}" />
+            <GroupBox Header="プレビュー">
+                <Label Grid.Row="0" Margin="3, 3" Background="{Binding Brush.Value, Mode=OneWay}" />
+            </GroupBox>
             <TextBox Grid.Row="1" Margin="3, 3" FontSize="14" TextAlignment="Center" IsReadOnly="True" Text="{Binding Decimal.Value, Mode=OneWay}" />
             <TextBox Grid.Row="2" Margin="3, 3" FontSize="14" TextAlignment="Center" IsReadOnly="True" Text="{Binding Hexadecimal.Value, Mode=OneWay}" />
             <Button Grid.Row="3" Margin="3, 3" Content="画面上から取得" />
@@ -76,7 +78,7 @@
                     </Grid.RowDefinitions>
 
                     <Slider Grid.Row="0" VerticalAlignment="Center" Minimum="0" Maximum="255" SmallChange="1" LargeChange="5" TickPlacement="BottomRight" TickFrequency="10" Value="{Binding R.Value}" />
-                    <TextBox Grid.Row="1" Margin="5, 0" VerticalAlignment="Center" TextAlignment="Center" FontSize="11" Text="{Binding R.Value}" />
+                    <TextBox Grid.Row="1" Margin="5, 0" VerticalAlignment="Center" TextAlignment="Center" FontSize="11" Text="{Binding R.Value, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
             </GroupBox>
 
@@ -89,7 +91,7 @@
                     </Grid.RowDefinitions>
 
                     <Slider Grid.Row="0" VerticalAlignment="Center" Minimum="0" Maximum="255" SmallChange="1" LargeChange="5" TickPlacement="BottomRight" TickFrequency="10" Value="{Binding G.Value}" />
-                    <TextBox Grid.Row="1" Margin="5, 0" VerticalAlignment="Center" TextAlignment="Center" FontSize="11" Text="{Binding G.Value}" />
+                    <TextBox Grid.Row="1" Margin="5, 0" VerticalAlignment="Center" TextAlignment="Center" FontSize="11" Text="{Binding G.Value, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
             </GroupBox>
 
@@ -102,7 +104,7 @@
                     </Grid.RowDefinitions>
 
                     <Slider Grid.Row="0" VerticalAlignment="Center" Minimum="0" Maximum="255" SmallChange="1" LargeChange="5" TickPlacement="BottomRight" TickFrequency="10" Value="{Binding B.Value}" />
-                    <TextBox Grid.Row="1" Margin="5, 0" VerticalAlignment="Center" TextAlignment="Center" FontSize="11" Text="{Binding B.Value}" />
+                    <TextBox Grid.Row="1" Margin="5, 0" VerticalAlignment="Center" TextAlignment="Center" FontSize="11" Text="{Binding B.Value, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
             </GroupBox>
         </Grid>
