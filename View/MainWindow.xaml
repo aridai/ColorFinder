@@ -1,4 +1,5 @@
 ﻿<Window x:Class="ColorFinder.View.MainWindow"
+        x:Name="Window"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -29,7 +30,7 @@
         <!-- メニュー -->
         <Menu Grid.ColumnSpan="2">
             <MenuItem Header="オプション(_O)">
-                <MenuItem  Header="最前面表示(_T)" />
+                <MenuItem  Header="最前面表示(_T)" IsChecked="{Binding Topmost, ElementName=Window}" Click="MenuItem_Click" />
                 <MenuItem  Header="カラーパレット(_C)"/>
             </MenuItem>
             <MenuItem Header="お気に入り(_F)">
