@@ -50,6 +50,11 @@ namespace ColorFinder.ViewModel
         public ReadOnlyReactiveProperty<SolidColorBrush> Brush { get; private set; }
 
         /// <summary>
+        /// 最前面表示を行うかどうかを表すフラグを管理するプロパティを取得します。
+        /// </summary>
+        public ReactiveProperty<bool> Topmost { get; private set; } = new ReactiveProperty<bool>();
+
+        /// <summary>
         /// ランダムな色を設定するコマンドを取得します。
         /// </summary>
         public ReactiveCommand RandomCommand { get; private set; } = new ReactiveCommand();

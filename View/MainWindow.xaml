@@ -12,7 +12,8 @@
         Height="280"
         MinWidth="360"
         MinHeight="280"
-        Background="WhiteSmoke">
+        Background="WhiteSmoke"
+        Topmost="{Binding Topmost.Value}">
     <Window.DataContext>
         <ViewModel:MainWindowViewModel />
     </Window.DataContext>
@@ -30,7 +31,7 @@
         <!-- メニュー -->
         <Menu Grid.ColumnSpan="2">
             <MenuItem Header="オプション(_O)">
-                <MenuItem  Header="最前面表示(_T)" IsChecked="{Binding Topmost, ElementName=Window}" Click="MenuItem_Click" />
+                <MenuItem  Header="最前面表示(_T)" IsCheckable="True" IsChecked="{Binding Topmost.Value}" />
                 <MenuItem  Header="カラーパレット(_C)"/>
             </MenuItem>
             <MenuItem Header="お気に入り(_F)">
