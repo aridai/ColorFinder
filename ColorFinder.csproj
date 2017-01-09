@@ -135,6 +135,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\ColorCode.cs" />
+    <Compile Include="ViewModel\DropperWindowViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="View\DropperAction.cs" />
     <Compile Include="View\DropperWindow.xaml.cs">
