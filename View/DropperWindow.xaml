@@ -5,8 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ColorFinder.View"
         mc:Ignorable="d"
-        Title="DropperWindow" Height="300" Width="300">
-    <Grid>
-        
+        Title="DropperWindow"
+        Width="200"
+        Height="125"
+        WindowStyle="ToolWindow"
+        ResizeMode="NoResize">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="画面上で左クリックをすると&#xa;その地点での色を取得します。" />
+        <TextBox Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Width="30" Height="30" Focusable="False" Background="Blue" />
+        <TextBlock Grid.Row="1" Grid.Column="1" Text=" RGB(255, 255, 255)" />
+        <TextBlock Grid.Row="2" Grid.Column="1" Text=" 座標(1000, 1000)" />
     </Grid>
 </Window>
