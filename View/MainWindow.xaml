@@ -4,6 +4,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:p="http://www.codeplex.com/prism"
         xmlns:local="clr-namespace:ColorFinder.View"
         xmlns:ViewModel="clr-namespace:ColorFinder.ViewModel"
         mc:Ignorable="d"
@@ -17,7 +19,13 @@
     <Window.DataContext>
         <ViewModel:MainWindowViewModel />
     </Window.DataContext>
-    
+
+    <i:Interaction.Triggers>
+        <p:InteractionRequestTrigger SourceObject="{Binding DropperRequest}">
+            <local:DropperAction />
+        </p:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -57,7 +65,7 @@
             <TextBox Grid.Row="0" Margin="3, 3" Focusable="False" IsReadOnly="True" Background="{Binding Brush.Value, Mode=OneWay}" />
             <TextBox Grid.Row="1" Margin="3, 3" FontSize="14" TextAlignment="Center" IsReadOnly="True" Text="{Binding Decimal.Value, Mode=OneWay}" />
             <TextBox Grid.Row="2" Margin="3, 3" FontSize="14" TextAlignment="Center" IsReadOnly="True" Text="{Binding Hexadecimal.Value, Mode=OneWay}" />
-            <Button Grid.Row="3" Margin="3, 3" Content="画面上から取得" />
+            <Button Grid.Row="3" Margin="3, 3" Content="画面上から取得" Command="{Binding DropperCommand}" />
             <Button Grid.Row="4" Margin="3, 3" Content="ランダムに取得" Command="{Binding RandomCommand}" />
         </Grid>
 

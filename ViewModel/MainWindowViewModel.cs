@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Reactive.Linq;
 using System.Windows.Media;
 using ColorFinder.Model;
+using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 
@@ -60,6 +61,16 @@ namespace ColorFinder.ViewModel
         public ReactiveCommand RandomCommand { get; private set; } = new ReactiveCommand();
 
         /// <summary>
+        /// スポイト機能を提供するコマンドを取得します。
+        /// </summary>
+        public ReactiveCommand DropperCommand { get; private set; } = new ReactiveCommand();
+
+        /// <summary>
+        /// スポイト機能を提供するコマンドのリクエストを取得します。
+        /// </summary>
+        public InteractionRequest<Notification> DropperRequest { get; private set; } = new InteractionRequest<Notification>();
+
+        /// <summary>
         /// インスタンスを生成します。
         /// </summary>
         public MainWindowViewModel()
@@ -79,6 +90,7 @@ namespace ColorFinder.ViewModel
 
             //  コマンドを設定する
             RandomCommand.Subscribe(_ => colorCode.SetRandomly());
+            DropperCommand.Subscribe(_ => DropperRequest.Raise(new Notification()));
         }
     }
 }
