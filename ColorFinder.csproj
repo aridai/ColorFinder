@@ -120,6 +120,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Behaviors\DropperAction.cs" />
+    <Compile Include="Models\NativeFunctions.cs" />
     <Compile Include="ViewModels\DropperWindowViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\DropperWindow.xaml.cs">
