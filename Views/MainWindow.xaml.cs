@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ColorFinder.View
+namespace ColorFinder.Views
 {
     /// <summary>
-    /// DropperWindow.xaml の相互作用ロジック
+    /// MainWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class DropperWindow : Window
+    public partial class MainWindow : Window
     {
-        public DropperWindow()
+        public MainWindow()
         {
             InitializeComponent();
         }

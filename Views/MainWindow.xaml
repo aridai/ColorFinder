@@ -1,13 +1,13 @@
-﻿<Window x:Class="ColorFinder.View.MainWindow"
-        x:Name="Window"
+﻿<Window x:Class="ColorFinder.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:p="http://www.codeplex.com/prism"
-        xmlns:local="clr-namespace:ColorFinder.View"
-        xmlns:ViewModel="clr-namespace:ColorFinder.ViewModel"
+        xmlns:local="clr-namespace:ColorFinder.Views"
+        xmlns:ViewModels="clr-namespace:ColorFinder.ViewModels"
+        xmlns:Behaviors="clr-namespace:ColorFinder.Behaviors"
         mc:Ignorable="d"
         Title="ColorFinder"
         Width="360"
@@ -17,12 +17,12 @@
         Background="WhiteSmoke"
         Topmost="{Binding Topmost.Value}">
     <Window.DataContext>
-        <ViewModel:MainWindowViewModel />
+        <ViewModels:MainWindowViewModel />
     </Window.DataContext>
 
     <i:Interaction.Triggers>
         <p:InteractionRequestTrigger SourceObject="{Binding DropperRequest}">
-            <local:DropperAction />
+            <Behaviors:DropperAction />
         </p:InteractionRequestTrigger>
     </i:Interaction.Triggers>
 

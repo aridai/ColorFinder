@@ -5,11 +5,11 @@ using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
-using ColorFinder.Model;
+using ColorFinder.Models;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 
-namespace ColorFinder.ViewModel
+namespace ColorFinder.ViewModels
 {
     /// <summary>
     /// スポイトウィンドウに対するViewModelを提供します。

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Prism.Mvvm;
 
-namespace ColorFinder.Model
+namespace ColorFinder.Models
 {
     /// <summary>
     /// カラーコードのRGB値を管理します。
@@ -31,7 +31,7 @@ namespace ColorFinder.Model
             get { return _G; }
             set { SetProperty(ref _G, value); }
         }
-        
+
         /// <summary>
         /// B値を取得・設定します。
         /// </summary>

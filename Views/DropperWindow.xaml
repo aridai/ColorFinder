@@ -1,10 +1,10 @@
-﻿<Window x:Class="ColorFinder.View.DropperWindow"
+﻿<Window x:Class="ColorFinder.Views.DropperWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ColorFinder.View"
-        xmlns:ViewModel="clr-namespace:ColorFinder.ViewModel"
+        xmlns:local="clr-namespace:ColorFinder.Views"
+        xmlns:ViewModels="clr-namespace:ColorFinder.ViewModels"
         mc:Ignorable="d"
         Title="DropperWindow"
         Width="200"
@@ -12,9 +12,9 @@
         WindowStyle="ToolWindow"
         ResizeMode="NoResize">
     <Window.DataContext>
-        <ViewModel:DropperWindowViewModel />
+        <ViewModels:DropperWindowViewModel />
     </Window.DataContext>
-    
+
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />

@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interactivity;
+using ColorFinder.Views;
 using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
 
-namespace ColorFinder.View
+namespace ColorFinder.Behaviors
 {
     /// <summary>
     /// スポイト機能を提供します。
