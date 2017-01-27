@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Prism.Mvvm;
+using static ColorFinder.Models.NativeFunctions;
 
 namespace ColorFinder.Models
 {
@@ -37,12 +38,12 @@ namespace ColorFinder.Models
         {
             //  座標を取得する
             Point point;
-            NativeFunctions.GetCursorPos(out point);
-            X = (int)point.x;
-            Y = (int)point.y;
+            GetCursorPos(out point);
+            X = point.X;
+            Y = point.Y;
 
             //  左クリックを判定する
-            IsClicked = NativeFunctions.GetKeyState(0x01) < 0;
+            IsClicked = GetKeyState(0x01) < 0;
         }
     }
 }

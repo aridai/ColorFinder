@@ -30,21 +30,4 @@ namespace ColorFinder.Models
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool GetCursorPos(out Point lpPoint);
     }
-
-    /// <summary>
-    /// 地点の座標を表します。
-    /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
-    public struct Point
-    {
-        /// <summary>
-        /// X座標
-        /// </summary>
-        public long x;
-
-        /// <summary>
-        /// Y座標
-        /// </summary>
-        public long y;
-    }
 }
