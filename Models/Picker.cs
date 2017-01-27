@@ -13,11 +13,11 @@ namespace ColorFinder.Models
     public class Picker
     {
         /// <summary>
-        /// 指定した地点の色を抽出する
+        /// 指定した地点の色を抽出します。
         /// </summary>
         /// <param name="x">X座標</param>
         /// <param name="y">Y座標</param>
-        /// <returns></returns>
+        /// <returns>指定した地点の色データを返します。</returns>
         public Color PickUpColor(int x, int y)
         {
             var bitmap = new Bitmap(1, 1);
