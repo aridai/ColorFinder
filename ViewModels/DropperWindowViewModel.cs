@@ -93,6 +93,10 @@ namespace ColorFinder.ViewModels
 
             //  マウスカーソル座標が変更通知を発行したときに更新する読み取り専用プロパティを生成する
             Coordinate = Observable.Merge(X, Y).Select(_ => $" 座標({X.Value}, {Y.Value})").ToReadOnlyReactiveProperty().AddTo(disposer);
+
+            //  タイマーによるマウス状態の更新を行う
+            timer.Subscribe(_ => mouseCursor.Update()).AddTo(disposer);
+            timer.Start();
         }
 
         /// <summary>
@@ -100,6 +104,7 @@ namespace ColorFinder.ViewModels
         /// </summary>
         public void Dispose()
         {
+            timer.Stop();
             disposer.Dispose();
         }
     }
