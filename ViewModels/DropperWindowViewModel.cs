@@ -15,7 +15,7 @@ namespace ColorFinder.ViewModels
     /// <summary>
     /// スポイトウィンドウに対するViewModelを提供します。
     /// </summary>
-    public class DropperWindowViewModel
+    public class DropperWindowViewModel : IDisposable
     {
         //  カラーコード
         private ColorCode colorCode = new ColorCode();
@@ -93,6 +93,14 @@ namespace ColorFinder.ViewModels
 
             //  マウスカーソル座標が変更通知を発行したときに更新する読み取り専用プロパティを生成する
             Coordinate = Observable.Merge(X, Y).Select(_ => $" 座標({X.Value}, {Y.Value})").ToReadOnlyReactiveProperty().AddTo(disposer);
+        }
+
+        /// <summary>
+        /// リソースの破棄を行います。
+        /// </summary>
+        public void Dispose()
+        {
+            disposer.Dispose();
         }
     }
 }
