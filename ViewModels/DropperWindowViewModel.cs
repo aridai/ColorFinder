@@ -8,6 +8,7 @@ using System.Windows.Media;
 using ColorFinder.Models;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
+using System.Reactive.Disposables;
 
 namespace ColorFinder.ViewModels
 {
@@ -70,25 +71,28 @@ namespace ColorFinder.ViewModels
         //  マウスカーソル更新用のタイマー
         private ReactiveTimer timer = new ReactiveTimer(TimeSpan.FromMilliseconds(50));
 
+        //  後始末用オブジェクト
+        private CompositeDisposable disposer = new CompositeDisposable();
+
         public DropperWindowViewModel()
         {
             //  RGB値を管理するReactivePropertyを生成する
-            R = colorCode.ToReactivePropertyAsSynchronized(c => c.R);
-            G = colorCode.ToReactivePropertyAsSynchronized(c => c.G);
-            B = colorCode.ToReactivePropertyAsSynchronized(c => c.B);
+            R = colorCode.ToReactivePropertyAsSynchronized(c => c.R).AddTo(disposer);
+            G = colorCode.ToReactivePropertyAsSynchronized(c => c.G).AddTo(disposer);
+            B = colorCode.ToReactivePropertyAsSynchronized(c => c.B).AddTo(disposer);
 
             //  マウスを管理するReactivePropertyを生成する
-            X = mouseCursor.ToReactivePropertyAsSynchronized(m => m.X);
-            Y = mouseCursor.ToReactivePropertyAsSynchronized(m => m.Y);
-            IsClicked = mouseCursor.ToReactivePropertyAsSynchronized(m => m.IsClicked);
+            X = mouseCursor.ToReactivePropertyAsSynchronized(m => m.X).AddTo(disposer);
+            Y = mouseCursor.ToReactivePropertyAsSynchronized(m => m.Y).AddTo(disposer);
+            IsClicked = mouseCursor.ToReactivePropertyAsSynchronized(m => m.IsClicked).AddTo(disposer);
 
             //  RGB値が変更通知を発行したときに更新する読み取り専用プロパティを生成する
             var rgb = Observable.Merge(R, G, B);
-            RGB = rgb.Select(_ => $" RGB({R.Value}, {G.Value}, {B.Value})").ToReadOnlyReactiveProperty();
-            Brush = rgb.Select(_ => new SolidColorBrush(Color.FromRgb(R.Value, G.Value, B.Value))).ToReadOnlyReactiveProperty();
+            RGB = rgb.Select(_ => $" RGB({R.Value}, {G.Value}, {B.Value})").ToReadOnlyReactiveProperty().AddTo(disposer);
+            Brush = rgb.Select(_ => new SolidColorBrush(Color.FromRgb(R.Value, G.Value, B.Value))).ToReadOnlyReactiveProperty().AddTo(disposer);
 
             //  マウスカーソル座標が変更通知を発行したときに更新する読み取り専用プロパティを生成する
-            Coordinate = Observable.Merge(X, Y).Select(_ => $" 座標({X.Value}, {Y.Value})").ToReadOnlyReactiveProperty();
+            Coordinate = Observable.Merge(X, Y).Select(_ => $" 座標({X.Value}, {Y.Value})").ToReadOnlyReactiveProperty().AddTo(disposer);
         }
     }
 }
