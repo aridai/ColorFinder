@@ -22,7 +22,10 @@ namespace ColorFinder.Behaviors
         protected override void Invoke(object parameter)
         {
             Application.Current.MainWindow.Hide();
-            new DropperWindow().ShowDialog();
+
+            using (var dropper = new DropperWindow())
+                dropper.ShowDialog();
+
             Application.Current.MainWindow.Show();
         }
     }

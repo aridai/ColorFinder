@@ -17,11 +17,16 @@ namespace ColorFinder.Views
     /// <summary>
     /// DropperWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class DropperWindow : Window
+    public partial class DropperWindow : Window, IDisposable
     {
         public DropperWindow()
         {
             InitializeComponent();
+        }
+
+        public void Dispose()
+        {
+            (DataContext as IDisposable).Dispose();
         }
     }
 }
