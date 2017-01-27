@@ -48,6 +48,11 @@ namespace ColorFinder.ViewModels
         public ReactiveProperty<int> Y { get; private set; }
 
         /// <summary>
+        /// マウスがクリックされているかどうかを表すフラグを管理するプロパティを取得します。
+        /// </summary>
+        public ReactiveProperty<bool> IsClicked { get; private set; }
+
+        /// <summary>
         /// RGB値を表す文字列を管理するプロパティを取得します。
         /// </summary>
         public ReadOnlyReactiveProperty<string> RGB { get; private set; }
@@ -72,9 +77,10 @@ namespace ColorFinder.ViewModels
             G = colorCode.ToReactivePropertyAsSynchronized(c => c.G);
             B = colorCode.ToReactivePropertyAsSynchronized(c => c.B);
 
-            //  座標を管理するReactivePropertyを生成する
+            //  マウスを管理するReactivePropertyを生成する
             X = mouseCursor.ToReactivePropertyAsSynchronized(m => m.X);
             Y = mouseCursor.ToReactivePropertyAsSynchronized(m => m.Y);
+            IsClicked = mouseCursor.ToReactivePropertyAsSynchronized(m => m.IsClicked);
 
             //  RGB値が変更通知を発行したときに更新する読み取り専用プロパティを生成する
             var rgb = Observable.Merge(R, G, B);
