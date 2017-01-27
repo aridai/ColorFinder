@@ -19,6 +19,9 @@ namespace ColorFinder.ViewModels
         //  カラーコード
         private ColorCode colorCode = new ColorCode();
 
+        //  マウスカーソル
+        private MouseCursor mouseCursor = new MouseCursor();
+
         /// <summary>
         /// R値を管理するプロパティを取得します。
         /// </summary>
@@ -37,12 +40,12 @@ namespace ColorFinder.ViewModels
         /// <summary>
         /// マウスカーソルのX座標を管理するプロパティを取得します。
         /// </summary>
-        public ReactiveProperty<int> X { get; private set; } = new ReactiveProperty<int>();
+        public ReactiveProperty<int> X { get; private set; }
 
         /// <summary>
         /// マウスカーソルのY座標を管理するプロパティを取得します。
         /// </summary>
-        public ReactiveProperty<int> Y { get; private set; } = new ReactiveProperty<int>();
+        public ReactiveProperty<int> Y { get; private set; }
 
         /// <summary>
         /// RGB値を表す文字列を管理するプロパティを取得します。
@@ -59,6 +62,9 @@ namespace ColorFinder.ViewModels
         /// </summary>
         public ReadOnlyReactiveProperty<SolidColorBrush> Brush { get; private set; }
 
+        //  マウスカーソル更新用のタイマー
+        private ReactiveTimer timer = new ReactiveTimer(TimeSpan.FromMilliseconds(50));
+
         public DropperWindowViewModel()
         {
             //  RGB値を管理するReactivePropertyを生成する
@@ -66,14 +72,16 @@ namespace ColorFinder.ViewModels
             G = colorCode.ToReactivePropertyAsSynchronized(c => c.G);
             B = colorCode.ToReactivePropertyAsSynchronized(c => c.B);
 
-            //  RGB値が変更通知を発行したときに更新する
-            //  読み取り専用プロパティを生成する
+            //  座標を管理するReactivePropertyを生成する
+            X = mouseCursor.ToReactivePropertyAsSynchronized(m => m.X);
+            Y = mouseCursor.ToReactivePropertyAsSynchronized(m => m.Y);
+
+            //  RGB値が変更通知を発行したときに更新する読み取り専用プロパティを生成する
             var rgb = Observable.Merge(R, G, B);
             RGB = rgb.Select(_ => $" RGB({R.Value}, {G.Value}, {B.Value})").ToReadOnlyReactiveProperty();
             Brush = rgb.Select(_ => new SolidColorBrush(Color.FromRgb(R.Value, G.Value, B.Value))).ToReadOnlyReactiveProperty();
 
-            //  マウスカーソル座標が変更通知を発行したときに更新する
-            //  読み取り専用プロパティを生成する
+            //  マウスカーソル座標が変更通知を発行したときに更新する読み取り専用プロパティを生成する
             Coordinate = Observable.Merge(X, Y).Select(_ => $" 座標({X.Value}, {Y.Value})").ToReadOnlyReactiveProperty();
         }
     }
