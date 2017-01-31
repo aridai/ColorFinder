@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Media;
 using ColorFinder.Models;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
-using System.Reactive.Disposables;
+
 
 namespace ColorFinder.ViewModels
 {
@@ -17,26 +17,26 @@ namespace ColorFinder.ViewModels
     /// </summary>
     public class DropperWindowViewModel : IDisposable
     {
-        //  カラーコード
-        private ColorCode colorCode = new ColorCode();
-
         //  マウスカーソル
         private MouseCursor mouseCursor = new MouseCursor();
+
+        //  色抽出処理
+        private Picker picker = new Picker();
 
         /// <summary>
         /// R値を管理するプロパティを取得します。
         /// </summary>
-        public ReactiveProperty<byte> R { get; private set; }
+        public ReactiveProperty<byte> R { get; private set; } = new ReactiveProperty<byte>();
 
         /// <summary>
         /// G値を管理するプロパティを取得します。
         /// </summary>
-        public ReactiveProperty<byte> G { get; private set; }
+        public ReactiveProperty<byte> G { get; private set; } = new ReactiveProperty<byte>();
 
         /// <summary>
         /// B値を管理するプロパティを取得します。
         /// </summary>
-        public ReactiveProperty<byte> B { get; private set; }
+        public ReactiveProperty<byte> B { get; private set; } = new ReactiveProperty<byte>();
 
         /// <summary>
         /// マウスカーソルのX座標を管理するプロパティを取得します。
@@ -76,15 +76,18 @@ namespace ColorFinder.ViewModels
 
         public DropperWindowViewModel()
         {
-            //  RGB値を管理するReactivePropertyを生成する
-            R = colorCode.ToReactivePropertyAsSynchronized(c => c.R).AddTo(disposer);
-            G = colorCode.ToReactivePropertyAsSynchronized(c => c.G).AddTo(disposer);
-            B = colorCode.ToReactivePropertyAsSynchronized(c => c.B).AddTo(disposer);
-
             //  マウスを管理するReactivePropertyを生成する
             X = mouseCursor.ToReactivePropertyAsSynchronized(m => m.X).AddTo(disposer);
             Y = mouseCursor.ToReactivePropertyAsSynchronized(m => m.Y).AddTo(disposer);
             IsClicked = mouseCursor.ToReactivePropertyAsSynchronized(m => m.IsClicked).AddTo(disposer);
+
+            Observable.Merge(X, Y).Subscribe(_ =>
+            {
+                var color = picker.PickUpColor(X.Value, Y.Value);
+                R.Value = color.R;
+                G.Value = color.G;
+                B.Value = color.B;
+            }).AddTo(disposer);
 
             //  RGB値が変更通知を発行したときに更新する読み取り専用プロパティを生成する
             var rgb = Observable.Merge(R, G, B);
@@ -95,7 +98,7 @@ namespace ColorFinder.ViewModels
             Coordinate = Observable.Merge(X, Y).Select(_ => $" 座標({X.Value}, {Y.Value})").ToReadOnlyReactiveProperty().AddTo(disposer);
 
             //  タイマーによるマウス状態の更新を行う
-            timer.Subscribe(_ => mouseCursor.Update()).AddTo(disposer);
+            timer.ObserveOn(SynchronizationContext.Current).Subscribe(_ => mouseCursor.Update()).AddTo(disposer);
             timer.Start();
         }
 

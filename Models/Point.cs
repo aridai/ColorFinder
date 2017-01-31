@@ -18,5 +18,11 @@ namespace ColorFinder.Models
         /// Y座標
         /// </summary>
         public int Y;
+
+        public Point(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
     }
 }
