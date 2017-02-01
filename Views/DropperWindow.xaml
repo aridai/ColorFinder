@@ -3,17 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:ColorFinder.Views"
         xmlns:ViewModels="clr-namespace:ColorFinder.ViewModels"
+        xmlns:Behaviors="clr-namespace:ColorFinder.Behaviors"
         mc:Ignorable="d"
         Title="DropperWindow"
         Width="200"
         Height="125"
         WindowStyle="ToolWindow"
         ResizeMode="NoResize">
+    
     <Window.DataContext>
         <ViewModels:DropperWindowViewModel />
     </Window.DataContext>
+
+    <i:Interaction.Behaviors>
+        <Behaviors:ViewModelCleanupBehavior />
+    </i:Interaction.Behaviors>
 
     <Grid Margin="5">
         <Grid.RowDefinitions>

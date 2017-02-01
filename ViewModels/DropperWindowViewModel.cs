@@ -99,6 +99,7 @@ namespace ColorFinder.ViewModels
 
             //  タイマーによるマウス状態の更新を行う
             timer.ObserveOn(SynchronizationContext.Current).Subscribe(_ => mouseCursor.Update()).AddTo(disposer);
+            timer.AddTo(disposer);
             timer.Start();
         }
 
