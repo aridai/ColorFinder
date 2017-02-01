@@ -121,6 +121,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Behaviors\DropperAction.cs" />
+    <Compile Include="Behaviors\ViewModelCleanupBehavior.cs" />
     <Compile Include="Models\MouseCursor.cs" />
     <Compile Include="Models\NativeFunctions.cs" />
     <Compile Include="Models\Picker.cs" />
