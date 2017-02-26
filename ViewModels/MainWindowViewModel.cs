@@ -90,7 +90,13 @@ namespace ColorFinder.ViewModels
 
             //  コマンドを設定する
             RandomCommand.Subscribe(_ => colorCode.SetRandomly());
-            DropperCommand.Subscribe(_ => DropperRequest.Raise(new Notification()));
+            DropperCommand.Subscribe(_ => DropperRequest.Raise(new Notification(), n =>
+            {
+                var color = n.Content as ColorCode;
+                R.Value = color.R;
+                G.Value = color.G;
+                B.Value = color.B;
+            }));
         }
     }
 }

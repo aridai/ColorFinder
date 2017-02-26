@@ -15,15 +15,22 @@ namespace ColorFinder.Behaviors
     /// </summary>
     public class DropperAction : TriggerAction<DependencyObject>
     {
+        public DropperAction() { }
+
         /// <summary>
         /// スポイトウィンドウを表示します。
         /// </summary>
         /// <param name="parameter"></param>
         protected override void Invoke(object parameter)
         {
+            var arg = parameter as InteractionRequestedEventArgs;
+            arg.Context.Content = new ColorFinder.Models.ColorCode { R = 125, G = 125, B = 125 };
+
             Application.Current.MainWindow.Hide();
             new DropperWindow().ShowDialog();
             Application.Current.MainWindow.Show();
+
+            arg.Callback();
         }
     }
 }
