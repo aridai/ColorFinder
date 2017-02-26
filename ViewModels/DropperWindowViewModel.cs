@@ -101,6 +101,9 @@ namespace ColorFinder.ViewModels
             timer.ObserveOn(SynchronizationContext.Current).Subscribe(_ => mouseCursor.Update()).AddTo(disposer);
             timer.AddTo(disposer);
             timer.Start();
+
+            //  マウスがクリックされたときの処理を登録する
+            IsClicked.DistinctUntilChanged().Where(c => c).Subscribe(_ => { /* その地点の色を取得してダイアログを閉じる */ }).AddTo(disposer);
         }
 
         /// <summary>
