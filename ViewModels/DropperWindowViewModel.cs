@@ -70,6 +70,11 @@ namespace ColorFinder.ViewModels
         public ReadOnlyReactiveProperty<SolidColorBrush> Brush { get; private set; }
 
         /// <summary>
+        /// クリックされたかどうかを表すフラグを取得します。
+        /// </summary>
+        public bool Confirmed { get; private set; }
+
+        /// <summary>
         /// ウィンドウを閉じるリクエストを取得します。
         /// </summary>
         public InteractionRequest<Notification> CloseRequest { get; } = new InteractionRequest<Notification>();
@@ -109,7 +114,7 @@ namespace ColorFinder.ViewModels
             timer.Start();
 
             //  マウスがクリックされたときの処理を登録する
-            IsClicked.DistinctUntilChanged().Where(c => c).Subscribe(_ => CloseRequest.Raise(new Notification())).AddTo(disposer);
+            IsClicked.DistinctUntilChanged().Where(c => c).Subscribe(_ => { Confirmed = true; CloseRequest.Raise(new Notification()); }).AddTo(disposer);
         }
 
         /// <summary>

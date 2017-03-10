@@ -68,7 +68,7 @@ namespace ColorFinder.ViewModels
         /// <summary>
         /// スポイト機能を提供するコマンドのリクエストを取得します。
         /// </summary>
-        public InteractionRequest<Notification> DropperRequest { get; private set; } = new InteractionRequest<Notification>();
+        public InteractionRequest<Confirmation> DropperRequest { get; private set; } = new InteractionRequest<Confirmation>();
 
         /// <summary>
         /// インスタンスを生成します。
@@ -90,12 +90,15 @@ namespace ColorFinder.ViewModels
 
             //  コマンドを設定する
             RandomCommand.Subscribe(_ => colorCode.SetRandomly());
-            DropperCommand.Subscribe(_ => DropperRequest.Raise(new Notification(), n =>
+            DropperCommand.Subscribe(_ => DropperRequest.Raise(new Confirmation(), c =>
             {
-                var color = n.Content as ColorCode;
-                R.Value = color.R;
-                G.Value = color.G;
-                B.Value = color.B;
+                if (c.Confirmed)
+                {
+                    var color = c.Content as ColorCode;
+                    R.Value = color.R;
+                    G.Value = color.G;
+                    B.Value = color.B;
+                }
             }));
         }
     }

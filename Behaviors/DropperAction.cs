@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interactivity;
+using ColorFinder.Models;
+using ColorFinder.ViewModels;
 using ColorFinder.Views;
 using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
 
@@ -24,12 +26,18 @@ namespace ColorFinder.Behaviors
         protected override void Invoke(object parameter)
         {
             var arg = parameter as InteractionRequestedEventArgs;
-            arg.Context.Content = new ColorFinder.Models.ColorCode { R = 125, G = 125, B = 125 };
+            var confirmation = arg.Context as Confirmation;
+            var mainWindow = AssociatedObject as MainWindow;
+            var dropperWindow = new DropperWindow();
+            var dropperWindowViewModel = dropperWindow.DataContext as DropperWindowViewModel;
 
-            Application.Current.MainWindow.Hide();
-            new DropperWindow().ShowDialog();
-            Application.Current.MainWindow.Show();
+            mainWindow.Hide();
+            dropperWindow.ShowDialog();
+            mainWindow.Show();
+            mainWindow.Activate();
 
+            confirmation.Confirmed = dropperWindowViewModel.Confirmed;
+            confirmation.Content = new ColorCode { R = dropperWindowViewModel.R.Value, G = dropperWindowViewModel.G.Value, B = dropperWindowViewModel.B.Value };
             arg.Callback();
         }
     }
