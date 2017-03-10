@@ -122,6 +122,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Behaviors\CloseDialogAction.cs" />
     <Compile Include="Behaviors\DropperAction.cs" />
     <Compile Include="Behaviors\ViewModelCleanupBehavior.cs" />
     <Compile Include="Models\MouseCursor.cs" />

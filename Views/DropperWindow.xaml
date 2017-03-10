@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:local="clr-namespace:ColorFinder.Views"
+        xmlns:Prism="http://www.codeplex.com/prism"
         xmlns:ViewModels="clr-namespace:ColorFinder.ViewModels"
         xmlns:Behaviors="clr-namespace:ColorFinder.Behaviors"
         mc:Ignorable="d"
@@ -18,6 +18,12 @@
         <ViewModels:DropperWindowViewModel />
     </Window.DataContext>
 
+    <i:Interaction.Triggers>
+        <Prism:InteractionRequestTrigger SourceObject="{Binding CloseRequest}">
+            <Behaviors:CloseDialogAction />
+        </Prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+    
     <i:Interaction.Behaviors>
         <Behaviors:ViewModelCleanupBehavior />
     </i:Interaction.Behaviors>

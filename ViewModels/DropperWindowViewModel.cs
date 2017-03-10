@@ -6,6 +6,7 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Windows.Media;
 using ColorFinder.Models;
+using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 
@@ -68,6 +69,11 @@ namespace ColorFinder.ViewModels
         /// </summary>
         public ReadOnlyReactiveProperty<SolidColorBrush> Brush { get; private set; }
 
+        /// <summary>
+        /// ウィンドウを閉じるリクエストを取得します。
+        /// </summary>
+        public InteractionRequest<Notification> CloseRequest { get; } = new InteractionRequest<Notification>();
+
         //  マウスカーソル更新用のタイマー
         private ReactiveTimer timer = new ReactiveTimer(TimeSpan.FromMilliseconds(50));
 
@@ -103,7 +109,7 @@ namespace ColorFinder.ViewModels
             timer.Start();
 
             //  マウスがクリックされたときの処理を登録する
-            IsClicked.DistinctUntilChanged().Where(c => c).Subscribe(_ => { /* その地点の色を取得してダイアログを閉じる */ }).AddTo(disposer);
+            IsClicked.DistinctUntilChanged().Where(c => c).Subscribe(_ => CloseRequest.Raise(new Notification())).AddTo(disposer);
         }
 
         /// <summary>
