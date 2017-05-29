@@ -44,14 +44,6 @@
                 <MenuItem x:Name="TopmostMenu" Header="最前面表示(_T)" IsCheckable="True" IsChecked="{Binding Topmost, ElementName=Window}" />
                 <MenuItem Header="カラーパレット(_C)"/>
             </MenuItem>
-            <MenuItem Header="お気に入り(_F)">
-                <MenuItem Header="新規追加(_A)" />
-                <MenuItem Header="一覧から選択(_S)" />
-            </MenuItem>
-            <MenuItem Header="ヘルプ(_H)">
-                <MenuItem Header="使い方(_U)" />
-                <MenuItem Header="バージョン(_V)" />
-            </MenuItem>
         </Menu>
 
         <!-- 左半分 -->

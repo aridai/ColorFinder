@@ -9,7 +9,7 @@ namespace ColorFinder.Behaviors
     /// </summary>
     public class ViewModelCleanupBehavior : Behavior<Window>
     {
-        private bool HasOnDetachingCalled;
+        private bool hasOnDetachingCalled;
 
         protected override void OnAttached()
         {
@@ -21,7 +21,7 @@ namespace ColorFinder.Behaviors
         {
             base.OnDetaching();
             AssociatedObject.Closed -= WindowClosed;
-            HasOnDetachingCalled = true;
+            hasOnDetachingCalled = true;
         }
 
         private void WindowClosed(object sender, EventArgs e)
@@ -31,7 +31,7 @@ namespace ColorFinder.Behaviors
 
         ~ViewModelCleanupBehavior()
         {
-            if (!HasOnDetachingCalled)
+            if (!hasOnDetachingCalled)
                 OnDetaching();
         }
     }
