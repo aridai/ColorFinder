@@ -123,7 +123,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Behaviors\CloseDialogAction.cs" />
-    <Compile Include="Behaviors\DropperAction.cs" />
+    <Compile Include="Behaviors\ShowDropperDialogAction.cs" />
     <Compile Include="Behaviors\ViewModelCleanupBehavior.cs" />
     <Compile Include="Models\MouseCursor.cs" />
     <Compile Include="Models\NativeFunctions.cs" />

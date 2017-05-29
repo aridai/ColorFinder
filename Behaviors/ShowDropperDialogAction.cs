@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interactivity;
 using ColorFinder.Models;
@@ -15,14 +11,8 @@ namespace ColorFinder.Behaviors
     /// <summary>
     /// スポイト機能を提供します。
     /// </summary>
-    public class DropperAction : TriggerAction<DependencyObject>
+    public class ShowDropperDialogAction : TriggerAction<DependencyObject>
     {
-        public DropperAction() { }
-
-        /// <summary>
-        /// スポイトウィンドウを表示します。
-        /// </summary>
-        /// <param name="parameter"></param>
         protected override void Invoke(object parameter)
         {
             var arg = parameter as InteractionRequestedEventArgs;
