@@ -9,22 +9,21 @@ using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
 namespace ColorFinder.Behaviors
 {
     /// <summary>
-    /// スポイト機能を提供します。
+    /// スポイトウィンドウを表示します。
     /// </summary>
-    public class ShowDropperDialogAction : TriggerAction<DependencyObject>
+    public class ShowDropperDialogAction : TriggerAction<Window>
     {
         protected override void Invoke(object parameter)
         {
-            var arg = parameter as InteractionRequestedEventArgs;
-            var confirmation = arg.Context as Confirmation;
-            var mainWindow = AssociatedObject as MainWindow;
+            var arg = (InteractionRequestedEventArgs)parameter;
+            var confirmation = (Confirmation)arg.Context;
             var dropperWindow = new DropperWindow();
-            var dropperWindowViewModel = dropperWindow.DataContext as DropperWindowViewModel;
+            var dropperWindowViewModel = (DropperWindowViewModel)dropperWindow.DataContext;
 
-            mainWindow.Hide();
+            AssociatedObject.Hide();
             dropperWindow.ShowDialog();
-            mainWindow.Show();
-            mainWindow.Activate();
+            AssociatedObject.Show();
+            AssociatedObject.Activate();
 
             confirmation.Confirmed = dropperWindowViewModel.Confirmed;
             confirmation.Content = new ColorCode { R = dropperWindowViewModel.R.Value, G = dropperWindowViewModel.G.Value, B = dropperWindowViewModel.B.Value };

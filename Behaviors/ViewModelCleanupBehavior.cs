@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Interactivity;
 
@@ -9,30 +10,16 @@ namespace ColorFinder.Behaviors
     /// </summary>
     public class ViewModelCleanupBehavior : Behavior<Window>
     {
-        private bool hasOnDetachingCalled;
-
         protected override void OnAttached()
         {
             base.OnAttached();
-            AssociatedObject.Closed += WindowClosed;
-        }
 
-        protected override void OnDetaching()
-        {
-            base.OnDetaching();
-            AssociatedObject.Closed -= WindowClosed;
-            hasOnDetachingCalled = true;
-        }
-
-        private void WindowClosed(object sender, EventArgs e)
-        {
-            (AssociatedObject.DataContext as IDisposable)?.Dispose();
-        }
-
-        ~ViewModelCleanupBehavior()
-        {
-            if (!hasOnDetachingCalled)
-                OnDetaching();
+            Observable.FromEvent<EventHandler, EventArgs>(
+                h => (s, e) => h(e),
+                h => AssociatedObject.Closed += h,
+                h => AssociatedObject.Closed -= h)
+                .Take(1)
+                .Subscribe(_ => ((IDisposable)AssociatedObject.DataContext).Dispose());
         }
     }
 }

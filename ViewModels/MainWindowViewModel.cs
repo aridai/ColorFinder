@@ -75,13 +75,12 @@ namespace ColorFinder.ViewModels
             G = Model.ColorCode.ToReactivePropertyAsSynchronized(c => c.G).AddTo(disposable);
             B = Model.ColorCode.ToReactivePropertyAsSynchronized(c => c.B).AddTo(disposable);
 
-            var rgb = Observable.Merge(R, G, B);
-            Decimal = rgb.Select(_ => $"{R.Value}, {G.Value}, {B.Value}").ToReadOnlyReactiveProperty().AddTo(disposable);
-            Hexadecimal = rgb.Select(_ => $"#{R.Value.ToString("X2")}{G.Value.ToString("X2")}{B.Value.ToString("X2")}").ToReadOnlyReactiveProperty().AddTo(disposable);
-            Brush = rgb.Select(_ => new SolidColorBrush(Color.FromRgb(R.Value, G.Value, B.Value))).ToReadOnlyReactiveProperty().AddTo(disposable);
+            var colorChangedAsObservable = Model.ColorCode.PropertyChangedAsObservable().Publish().RefCount();
+            Decimal = colorChangedAsObservable.Select(_ => $"{R.Value}, {G.Value}, {B.Value}").ToReadOnlyReactiveProperty().AddTo(disposable);
+            Hexadecimal = colorChangedAsObservable.Select(_ => $"#{R.Value.ToString("X2")}{G.Value.ToString("X2")}{B.Value.ToString("X2")}").ToReadOnlyReactiveProperty().AddTo(disposable);
+            Brush = colorChangedAsObservable.Select(_ => new SolidColorBrush(Color.FromRgb(R.Value, G.Value, B.Value))).ToReadOnlyReactiveProperty().AddTo(disposable);
             R.Value = G.Value = B.Value = 255;
 
-            //  コマンドを設定する
             RandomCommand.Subscribe(_ => Model.ColorCode.SetRandomly()).AddTo(disposable);
             DropperCommand.Subscribe(_ => ShowDropperDialogRequest.Raise(new Confirmation(), c =>
             {
