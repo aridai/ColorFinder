@@ -4,9 +4,9 @@ using System.Drawing;
 namespace ColorFinder.Models
 {
     /// <summary>
-    /// 色の抽出処理を提供します。
+    /// スポイト機能を提供します。
     /// </summary>
-    public class Picker
+    public class Dropper
     {
         /// <summary>
         /// 指定した地点の色を抽出します。

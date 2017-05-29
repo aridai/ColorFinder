@@ -125,9 +125,11 @@
     <Compile Include="Behaviors\CloseDialogAction.cs" />
     <Compile Include="Behaviors\ShowDropperDialogAction.cs" />
     <Compile Include="Behaviors\ViewModelCleanupBehavior.cs" />
-    <Compile Include="Models\MouseCursor.cs" />
-    <Compile Include="Models\NativeFunctions.cs" />
-    <Compile Include="Models\Picker.cs" />
+    <Compile Include="Models\Dropper.cs" />
+    <Compile Include="Models\DropperWindowsModel.cs" />
+    <Compile Include="Models\MainWindowModel.cs" />
+    <Compile Include="Models\Cursor.cs" />
+    <Compile Include="Models\PInvoke.cs" />
     <Compile Include="Models\Point.cs" />
     <Compile Include="ViewModels\DropperWindowViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

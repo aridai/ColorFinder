@@ -4,7 +4,6 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Windows.Media;
-using ColorFinder.Models;
 using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
@@ -17,43 +16,42 @@ namespace ColorFinder.ViewModels
     /// </summary>
     public class DropperWindowViewModel : IDisposable
     {
-        private MouseCursor mouseCursor = new MouseCursor();
-
-        private Picker picker = new Picker();
-
-        private ReactiveTimer timer = new ReactiveTimer(TimeSpan.FromMilliseconds(50));
-
         private CompositeDisposable disposable = new CompositeDisposable();
+
+        /// <summary>
+        /// モデル部を取得します。
+        /// </summary>
+        public Models.DropperWindowsModel Model { get; } = new Models.DropperWindowsModel();
 
         /// <summary>
         /// R値を管理するプロパティを取得します。
         /// </summary>
-        public ReactiveProperty<byte> R { get; } = new ReactiveProperty<byte>();
+        public ReadOnlyReactiveProperty<byte> R { get; }
 
         /// <summary>
         /// G値を管理するプロパティを取得します。
         /// </summary>
-        public ReactiveProperty<byte> G { get; } = new ReactiveProperty<byte>();
+        public ReadOnlyReactiveProperty<byte> G { get; }
 
         /// <summary>
         /// B値を管理するプロパティを取得します。
         /// </summary>
-        public ReactiveProperty<byte> B { get; } = new ReactiveProperty<byte>();
+        public ReadOnlyReactiveProperty<byte> B { get; }
 
         /// <summary>
         /// マウスカーソルのX座標を管理するプロパティを取得します。
         /// </summary>
-        public ReactiveProperty<int> X { get; }
+        public ReadOnlyReactiveProperty<int> X { get; }
 
         /// <summary>
         /// マウスカーソルのY座標を管理するプロパティを取得します。
         /// </summary>
-        public ReactiveProperty<int> Y { get; }
+        public ReadOnlyReactiveProperty<int> Y { get; }
 
         /// <summary>
         /// マウスがクリックされているかどうかを表すフラグを管理するプロパティを取得します。
         /// </summary>
-        public ReactiveProperty<bool> IsClicked { get; }
+        public ReadOnlyReactiveProperty<bool> IsClicked { get; }
 
         /// <summary>
         /// RGB値を表す文字列を管理するプロパティを取得します。
@@ -79,44 +77,30 @@ namespace ColorFinder.ViewModels
         /// ウィンドウを閉じるリクエストを取得します。
         /// </summary>
         public InteractionRequest<Notification> CloseRequest { get; } = new InteractionRequest<Notification>();
-        
+
         public DropperWindowViewModel()
         {
-            //  マウスを管理するReactivePropertyを生成する
-            X = mouseCursor.ToReactivePropertyAsSynchronized(m => m.X).AddTo(disposable);
-            Y = mouseCursor.ToReactivePropertyAsSynchronized(m => m.Y).AddTo(disposable);
-            IsClicked = mouseCursor.ToReactivePropertyAsSynchronized(m => m.IsClicked).AddTo(disposable);
+            //  カラーコード
+            R = Model.ColorCode.ObserveProperty(c => c.R).ToReadOnlyReactiveProperty().AddTo(disposable);
+            G = Model.ColorCode.ObserveProperty(c => c.G).ToReadOnlyReactiveProperty().AddTo(disposable);
+            B = Model.ColorCode.ObserveProperty(c => c.B).ToReadOnlyReactiveProperty().AddTo(disposable);
+            var colorChangedAsObservable = Model.ColorCode.PropertyChangedAsObservable().Publish().RefCount();
+            RGB = colorChangedAsObservable.Select(_ => $" RGB({R.Value}, {G.Value}, {B.Value})").ToReadOnlyReactiveProperty().AddTo(disposable);
+            Brush = colorChangedAsObservable.Select(_ => new SolidColorBrush(Color.FromRgb(R.Value, G.Value, B.Value))).ToReadOnlyReactiveProperty().AddTo(disposable);
 
-            Observable.Merge(X, Y).Subscribe(_ =>
-            {
-                var color = picker.PickUpColor(X.Value, Y.Value);
-                R.Value = color.R;
-                G.Value = color.G;
-                B.Value = color.B;
-            }).AddTo(disposable);
+            //  マウスカーソル
+            X = Model.Cursor.ObserveProperty(c => c.X).ToReadOnlyReactiveProperty().AddTo(disposable);
+            Y = Model.Cursor.ObserveProperty(c => c.Y).ToReadOnlyReactiveProperty().AddTo(disposable);
+            IsClicked = Model.Cursor.ObserveProperty(c => c.IsClicked).ToReadOnlyReactiveProperty().AddTo(disposable);
 
-            //  RGB値が変更通知を発行したときに更新する読み取り専用プロパティを生成する
-            var rgb = Observable.Merge(R, G, B);
-            RGB = rgb.Select(_ => $" RGB({R.Value}, {G.Value}, {B.Value})").ToReadOnlyReactiveProperty().AddTo(disposable);
-            Brush = rgb.Select(_ => new SolidColorBrush(Color.FromRgb(R.Value, G.Value, B.Value))).ToReadOnlyReactiveProperty().AddTo(disposable);
+            //  イベントの購読
+            var coordChangedAsObservable = Observable.Merge(X, Y).Publish().RefCount();
+            Coordinate = coordChangedAsObservable.Select(_ => $" 座標({X.Value}, {Y.Value})").ToReadOnlyReactiveProperty().AddTo(disposable);
+            coordChangedAsObservable.Subscribe(_ => Model.UpdateColorCode(X.Value, Y.Value)).AddTo(disposable);
+            IsClicked.Where(c => c).ObserveOnDispatcher().Subscribe(_ => { Confirmed = true; CloseRequest.Raise(new Notification()); }).AddTo(disposable);
 
-            //  マウスカーソル座標が変更通知を発行したときに更新する読み取り専用プロパティを生成する
-            Coordinate = 
-                Observable.Merge(X, Y)
-                .Select(_ => $" 座標({X.Value}, {Y.Value})")
-                .ToReadOnlyReactiveProperty()
-                .AddTo(disposable);
-
-            //  タイマーによるマウス状態の更新を行う
-            timer.ObserveOn(SynchronizationContext.Current).Subscribe(_ => mouseCursor.Update()).AddTo(disposable);
-            timer.AddTo(disposable);
-            timer.Start();
-
-            //  マウスがクリックされたときの処理を登録する
-            IsClicked.DistinctUntilChanged()
-                .Where(c => c)
-                .Subscribe(_ => { Confirmed = true; CloseRequest.Raise(new Notification()); })
-                .AddTo(disposable);
+            Model.AddTo(disposable);
+            Model.Timer.Start();
         }
 
         /// <summary>
@@ -124,7 +108,6 @@ namespace ColorFinder.ViewModels
         /// </summary>
         public void Dispose()
         {
-            timer.Stop();
             disposable.Dispose();
         }
     }

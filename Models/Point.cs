@@ -19,6 +19,11 @@ namespace ColorFinder.Models
         /// </summary>
         public int Y;
 
+        /// <summary>
+        /// 座標を指定してインスタンスを生成します。
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
         public Point(int x, int y)
         {
             X = x;

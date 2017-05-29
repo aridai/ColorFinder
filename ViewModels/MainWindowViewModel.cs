@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows.Media;
-using ColorFinder.Models;
 using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
@@ -15,9 +14,12 @@ namespace ColorFinder.ViewModels
     /// </summary>
     public class MainWindowViewModel
     {
-        private ColorCode colorCode = new ColorCode();
-
         private CompositeDisposable disposable = new CompositeDisposable();
+
+        /// <summary>
+        /// モデル部を取得します。
+        /// </summary>
+        public Models.MainWindowModel Model { get; } = new Models.MainWindowModel();
 
         /// <summary>
         /// R値を管理するプロパティを取得します。
@@ -69,13 +71,10 @@ namespace ColorFinder.ViewModels
         /// </summary>
         public MainWindowViewModel()
         {
-            //  RGB値を管理するReactivePropertyを生成する
-            R = colorCode.ToReactivePropertyAsSynchronized(c => c.R).AddTo(disposable);
-            G = colorCode.ToReactivePropertyAsSynchronized(c => c.G).AddTo(disposable);
-            B = colorCode.ToReactivePropertyAsSynchronized(c => c.B).AddTo(disposable);
+            R = Model.ColorCode.ToReactivePropertyAsSynchronized(c => c.R).AddTo(disposable);
+            G = Model.ColorCode.ToReactivePropertyAsSynchronized(c => c.G).AddTo(disposable);
+            B = Model.ColorCode.ToReactivePropertyAsSynchronized(c => c.B).AddTo(disposable);
 
-            //  RGB値が変更通知を発行したときに更新する
-            //  読み取り専用プロパティを生成する
             var rgb = Observable.Merge(R, G, B);
             Decimal = rgb.Select(_ => $"{R.Value}, {G.Value}, {B.Value}").ToReadOnlyReactiveProperty().AddTo(disposable);
             Hexadecimal = rgb.Select(_ => $"#{R.Value.ToString("X2")}{G.Value.ToString("X2")}{B.Value.ToString("X2")}").ToReadOnlyReactiveProperty().AddTo(disposable);
@@ -83,12 +82,12 @@ namespace ColorFinder.ViewModels
             R.Value = G.Value = B.Value = 255;
 
             //  コマンドを設定する
-            RandomCommand.Subscribe(_ => colorCode.SetRandomly()).AddTo(disposable);
+            RandomCommand.Subscribe(_ => Model.ColorCode.SetRandomly()).AddTo(disposable);
             DropperCommand.Subscribe(_ => ShowDropperDialogRequest.Raise(new Confirmation(), c =>
             {
                 if (c.Confirmed)
                 {
-                    var color = (ColorCode)c.Content;
+                    var color = (Models.ColorCode)c.Content;
                     R.Value = color.R;
                     G.Value = color.G;
                     B.Value = color.B;
