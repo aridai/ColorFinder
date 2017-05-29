@@ -31,7 +31,7 @@ namespace ColorFinder.Behaviors
 
         ~ViewModelCleanupBehavior()
         {
-            if (HasOnDetachingCalled)
+            if (!HasOnDetachingCalled)
                 OnDetaching();
         }
     }
