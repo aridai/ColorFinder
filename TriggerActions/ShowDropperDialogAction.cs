@@ -6,7 +6,7 @@ using ColorFinder.ViewModels;
 using ColorFinder.Views;
 using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
 
-namespace ColorFinder.Behaviors
+namespace ColorFinder.TriggerActions
 {
     /// <summary>
     /// スポイトウィンドウを表示します。

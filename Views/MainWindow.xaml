@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:p="http://www.codeplex.com/prism"
-    xmlns:Behaviors="clr-namespace:ColorFinder.Behaviors"
+    xmlns:TriggerActions="clr-namespace:ColorFinder.TriggerActions"
     xmlns:ViewModels="clr-namespace:ColorFinder.ViewModels"
     mc:Ignorable="d"
     x:Name="Window"
@@ -20,7 +20,7 @@
 
     <i:Interaction.Triggers>
         <p:InteractionRequestTrigger SourceObject="{Binding ShowDropperDialogRequest}">
-            <Behaviors:ShowDropperDialogAction />
+            <TriggerActions:CloseDialogAction />
         </p:InteractionRequestTrigger>
     </i:Interaction.Triggers>
 

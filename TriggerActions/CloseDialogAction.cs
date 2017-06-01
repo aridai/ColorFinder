@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Interactivity;
 
-namespace ColorFinder.Behaviors
+namespace ColorFinder.TriggerActions
 {
     /// <summary>
     /// ダイアログを閉じるアクションを提供します。
