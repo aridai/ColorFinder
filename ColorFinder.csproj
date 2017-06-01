@@ -122,6 +122,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Converters\SolidColorBrushConverter.cs" />
     <Compile Include="TriggerActions\CloseDialogAction.cs" />
     <Compile Include="TriggerActions\ShowDropperDialogAction.cs" />
     <Compile Include="Behaviors\ViewModelCleanupBehavior.cs" />
