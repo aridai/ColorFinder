@@ -20,7 +20,7 @@
 
     <i:Interaction.Triggers>
         <p:InteractionRequestTrigger SourceObject="{Binding ShowDropperDialogRequest}">
-            <TriggerActions:CloseDialogAction />
+            <TriggerActions:ShowDropperDialogAction />
         </p:InteractionRequestTrigger>
     </i:Interaction.Triggers>
 
